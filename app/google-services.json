@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108261091318",
+    "project_id": "aast-car-pooling-app",
+    "storage_bucket": "aast-car-pooling-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108261091318:android:7a2059cb728c702af009d7",
+        "android_client_info": {
+          "package_name": "com.example.car_pooling_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108261091318-297lkrd9qtleevrkecl48bgsvufhsn2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB33pE-LIBTP8PY_LqsISoaPKMtJRDSNFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108261091318-297lkrd9qtleevrkecl48bgsvufhsn2k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
