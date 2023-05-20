@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
-        android:fontFamily="@font/SFPRODISPLAYBOLD"
+        android:fontFamily="@font/sf_pro_display_bold"
         android:text="@string/GreetingMessage"
         android:textColor="@color/black"
         android:textSize="50sp"
