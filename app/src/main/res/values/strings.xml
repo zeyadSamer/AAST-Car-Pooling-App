@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Car-pooling-app</string>
-    <string name="GreetingMessage">Need a ride?\nCarpool Now!</string>
+    <string name="app_title">Go With Me</string>
 </resources>
