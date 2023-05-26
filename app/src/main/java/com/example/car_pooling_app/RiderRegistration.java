@@ -11,10 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.car_pooling_app.models.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RiderRegistration extends AppCompatActivity {
 
@@ -29,14 +34,20 @@ public class RiderRegistration extends AppCompatActivity {
     Button registeringButtonStatus;
     Button signButton;
     Boolean isSigningIn=false;
+
+
+    String email;
+    String username;
+    String password;
+    String phone;
+
+
+
     
     
     
     private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-
-
-
-
+    private FirebaseFirestore  firebaseFireStore=FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +89,10 @@ public class RiderRegistration extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                String email=emailEditText.getText().toString();
-                String username=usernameEditText.getText().toString();
-                String password=passwordEditText.getText().toString();
-                String phone=phoneNumberEditText.getText().toString();
+                 email=emailEditText.getText().toString();
+                 username=usernameEditText.getText().toString();
+                 password=passwordEditText.getText().toString();
+                 phone=phoneNumberEditText.getText().toString();
 
 
 
@@ -146,6 +157,16 @@ public class RiderRegistration extends AppCompatActivity {
 
                 if(task.isSuccessful()) {
                     Toast.makeText(RiderRegistration.this, "Signed Up successfully", Toast.LENGTH_LONG).show();
+                    postRiderData();
+
+
+
+
+
+
+
+
+
                 }else{
                     Toast.makeText(RiderRegistration.this, "Error in Signing Up", Toast.LENGTH_LONG).show();
                 }
@@ -179,6 +200,50 @@ public class RiderRegistration extends AppCompatActivity {
 
 
 
+    }
+
+
+
+    private void postRiderData(){
+
+        Rider rider= new Rider(email,username,phone);
+
+
+
+//ANOTHER SOLUTION
+//        firebaseFireStore.collection("riders").document("rider"+firebaseAuth.getCurrentUser().getUid()).set(rider).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void unused) {
+//
+//                Toast.makeText(RiderRegistration.this,"Storage Succeess",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(RiderRegistration.this,e.toString(),Toast.LENGTH_SHORT).show();
+//                Log.d("errorsss",e.toString());
+//
+//
+//            }
+//        });
+
+
+
+        firebaseFireStore.collection("riders").add(rider).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(RiderRegistration.this,"Storage Succeess" ,Toast.LENGTH_SHORT).show();
+//
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RiderRegistration.this,"Storage NOO",Toast.LENGTH_SHORT).show();
+//
+            }
+        });
     }
 
 
