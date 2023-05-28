@@ -7,10 +7,84 @@
     tools:context=".RiderRequestingScreen">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="348dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Switch
+            android:id="@+id/destinationSwitch"
+            android:layout_width="278dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/sf_pro_display_bold"
+            android:text="Going to AAST"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/homeAddressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:hint="Home address"
+
+            android:inputType="textPostalAddress" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_display_bold"
+            android:layout_margin="10dp"
+            android:text="EGP"
+
+
+            />
+
+            <EditText
+            android:id="@+id/paymentOfferEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="enter your payment offer"
+
+
+            android:layout_margin="10dp"
+
+            android:inputType="numberDecimal" />
 
 
 
 
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/findDriverButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find driver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="0.734" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
