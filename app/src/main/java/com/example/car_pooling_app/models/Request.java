@@ -9,7 +9,7 @@ public class Request {
     private String destinationAddress;
     private Rider rider;
 
-    private double riderPaymentOffer;
+    private Double riderPaymentOffer;
 
 
 
@@ -48,11 +48,11 @@ public class Request {
         this.rider = rider;
     }
 
-    public double getRiderPaymentOffer() {
+    public Double getRiderPaymentOffer() {
         return riderPaymentOffer;
     }
 
-    public void setRiderPaymentOffer(double riderPaymentOffer) {
+    public void setRiderPaymentOffer(Double riderPaymentOffer) {
         this.riderPaymentOffer = riderPaymentOffer;
     }
 

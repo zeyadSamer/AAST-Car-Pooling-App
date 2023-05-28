@@ -59,12 +59,13 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/paymentOffer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
             android:layout_margin="20dp"
             android:fontFamily="@font/sf_pro_display_bold"
-            android:text="$200"
+            android:text="EGP:200"
             android:textSize="25dp"
 
             />
