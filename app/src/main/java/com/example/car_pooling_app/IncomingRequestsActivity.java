@@ -19,7 +19,6 @@ public class IncomingRequestsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_requests);
-        TextView testing = findViewById(R.id.textView);
 
         SharedPreferences sPreferences = getSharedPreferences("sPref",Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("MyObject",null);
@@ -27,22 +26,14 @@ public class IncomingRequestsActivity extends AppCompatActivity {
         Driver driver = gson.fromJson(nameSharedPref,Driver.class);
 
 
-        if(nameSharedPref != null)
+        /*if(nameSharedPref != null)
         {
-            testing.setText(driver.getPhoneNumber());
+
         }
+
         else {
-            testing.setText("Error parsing data from shared preference");
-        }
 
-        //Gson gson = new Gson();
-        //String json = mPrefs.getString("MyObject", "");
-        //Driver driver = gson.fromJson(json, Driver.class);
-       // Log.d("yarab"," "+driver.getPhoneNumber());
-
-
-
-
+        }*/
 
     }
 }
