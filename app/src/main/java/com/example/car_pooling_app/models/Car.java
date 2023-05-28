@@ -5,6 +5,10 @@ public class Car {
 
     private String plateNumber;
     private String carType;
+    public Car(){
+
+
+    }
 
     public Car(String plateNumber,String carType){
 

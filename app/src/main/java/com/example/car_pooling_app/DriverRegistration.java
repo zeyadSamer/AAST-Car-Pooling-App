@@ -3,6 +3,8 @@ package com.example.car_pooling_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +23,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 public class DriverRegistration extends AppCompatActivity {
 
@@ -46,11 +51,14 @@ public class DriverRegistration extends AppCompatActivity {
     String carType;
     String plateNumber;
     FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
-
+    Driver driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_driver_registration);
         usernameEditText=(EditText) findViewById(R.id.username);
         emailEditText=(EditText) findViewById(R.id.email);
@@ -66,9 +74,13 @@ public class DriverRegistration extends AppCompatActivity {
 
 
 
+
         registeringButtonStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //goToRequestsScreen();
+
                 isSigningIn=!isSigningIn;
 
                 if(isSigningIn){
@@ -197,11 +209,33 @@ public class DriverRegistration extends AppCompatActivity {
 
 
 
+    private void goToRequestsScreen(){
+
+
+//set variables of 'myObject', etc.
+        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
+
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        //Gson gson = new Gson();
+        //String json = gson.toJson(driver);
+        prefsEditor.putString("Name","Ahmed El-Hussein");
+        prefsEditor.apply();
+        Intent intent=new Intent(DriverRegistration.this, IncomingRequestsActivity.class);
+        startActivity(intent);
+
+
+
+
+
+
+
+    }
+
     private void postDriverData(){
 
         Car driverCar=new Car(plateNumber,carType);
 
-        Driver driver=new Driver(email,username,phone,driverCar);
+        driver=new Driver(email,username,phone,driverCar);
 
         firebaseFirestore.collection("drivers").add(driver).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
@@ -210,11 +244,12 @@ public class DriverRegistration extends AppCompatActivity {
                 Toast.makeText(DriverRegistration.this,"Data uploaded Successfully",Toast.LENGTH_SHORT).show();
 
                 //after we succeded in uploading data lets upload driver car
+
                 documentReference.update("car",driverCar).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(DriverRegistration.this,"Car uploaded Successfully",Toast.LENGTH_SHORT).show();
-
+                        goToRequestsScreen();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -246,6 +281,26 @@ public class DriverRegistration extends AppCompatActivity {
     }
 
 
+    //for testing used later
+//    private void getData(){
+//        String driverId="8fOL2dN5UZJnAYjWksR0";
+//        firebaseFirestore.collection("drivers").document(driverId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//
+//                Driver driver=task.getResult().toObject(Driver.class);
+//
+//                Log.d("driver",  driver.getCar().getPlateNumber());
+//
+//            }
+//        });
+//
+//
+//
+//
+//    }
+//
+//
 
 
 
