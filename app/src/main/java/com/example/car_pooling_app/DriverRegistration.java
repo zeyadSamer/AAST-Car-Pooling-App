@@ -1,8 +1,6 @@
 package com.example.car_pooling_app;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,9 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.car_pooling_app.models.Car;
 import com.example.car_pooling_app.models.Driver;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,9 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 public class DriverRegistration extends AppCompatActivity {
@@ -104,28 +102,17 @@ public class DriverRegistration extends AppCompatActivity {
                  plateNumber=plateNumberEditText.getText().toString();
 
                 if (isSigningIn) {
-
                     Log.d("debugging", "email "+email + password);
-
                     logIn(email, password);
-                }else {
+                }
+                else {
                     signUp(email,password);
                 }
-
-
-
-
 
             }
         });
 
-
-
-
-
     }
-
-
 
     private void renderLoginScreen(){
         signButton.setText("Sign In");
@@ -138,12 +125,7 @@ public class DriverRegistration extends AppCompatActivity {
         carTypeEditText.setVisibility(View.GONE);
         plateNumberEditText.setVisibility(View.GONE);
 
-
-
-
     }
-
-
 
     private void renderRegisterScreen(){
         signButton.setText("Sign Up");
@@ -153,12 +135,7 @@ public class DriverRegistration extends AppCompatActivity {
         usernameEditText.setVisibility(View.VISIBLE);
         carTypeEditText.setVisibility(View.VISIBLE);
         plateNumberEditText.setVisibility(View.VISIBLE);
-
-
-
     }
-
-
 
     private void signUp(String email, String password){
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -167,26 +144,18 @@ public class DriverRegistration extends AppCompatActivity {
 
                 if(task.isSuccessful()) {
                     Toast.makeText(DriverRegistration.this, "Signed Up successfully", Toast.LENGTH_LONG).show();
-
                     postDriverData();
-
-
 
                 }else{
                     Toast.makeText(DriverRegistration.this, "Error in Signing Up", Toast.LENGTH_LONG).show();
                 }
-
             }
-
-
-
         });
 
     }
 
 
     private void logIn(String email,String password){
-
 
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
           @Override
@@ -199,36 +168,23 @@ public class DriverRegistration extends AppCompatActivity {
 
           }
       }
-
-        );
-
-
-
+      );
 
     }
-
-
 
     private void goToRequestsScreen(){
 
 
 //set variables of 'myObject', etc.
-        SharedPreferences  mPrefs = getPreferences(MODE_PRIVATE);
-
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        //Gson gson = new Gson();
-        //String json = gson.toJson(driver);
-        prefsEditor.putString("Name","Ahmed El-Hussein");
-        prefsEditor.apply();
+        SharedPreferences sPreferences = getSharedPreferences("sPref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(driver);
+        //editor.putString("Name","Ahmed El-Hussein");
+        editor.putString("MyObject", json);
+        editor.apply();
         Intent intent=new Intent(DriverRegistration.this, IncomingRequestsActivity.class);
         startActivity(intent);
-
-
-
-
-
-
-
     }
 
     private void postDriverData(){
@@ -268,18 +224,7 @@ public class DriverRegistration extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
     }
-
 
     //for testing used later
 //    private void getData(){
@@ -299,12 +244,5 @@ public class DriverRegistration extends AppCompatActivity {
 //
 //
 //    }
-//
-//
-
-
-
-
-
 
 }
