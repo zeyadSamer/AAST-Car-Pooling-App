@@ -6,7 +6,10 @@ public class Rider extends User{
 
 //    private String address;
 
+public Rider(){
+    super("","","");
 
+}
 
 
     public Rider(String email,String username,String phoneNumber){
