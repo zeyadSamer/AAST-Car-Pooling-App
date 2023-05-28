@@ -9,8 +9,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="399dp"
+        android:layout_height="725dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,8 +18,7 @@
         tools:itemCount="5"
 
 
-
-        tools:listitem="@layout/request_item"/>
+        tools:listitem="@layout/request_item" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

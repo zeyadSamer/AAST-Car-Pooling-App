@@ -3,6 +3,7 @@ package com.example.car_pooling_app;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -49,8 +50,36 @@ public class IncomingRequestsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleView);
         RequestsAdapter requestsAdapter = new RequestsAdapter(requestArrayList);
         recyclerView.setAdapter(requestsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        getIncomingRequests();
+     //   getIncomingRequests();
+
+        firebaseFirestore.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot snapshots,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("TAG", "listen:error", e);
+                    return;
+                }
+                else{
+
+                    if(snapshots != null) {
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            Request request = dc.getDocument().toObject(Request.class);
+                            Log.d("dataa", request.getDestinationAddress());
+                            requestArrayList.add(request);
+                            requestsAdapter.notifyDataSetChanged();//DOne by Al hussein
+
+                        }
+                    }
+                }
+            };
+        });
+
+
+
+
     }
 
 
@@ -74,6 +103,7 @@ public class IncomingRequestsActivity extends AppCompatActivity {
                     if(snapshots != null) {
                         for (DocumentChange dc : snapshots.getDocumentChanges()) {
                             Request request = dc.getDocument().toObject(Request.class);
+                            Log.d("dataa", request.getDestinationAddress());
                             requestArrayList.add(request);
 
                         }
@@ -87,6 +117,7 @@ public class IncomingRequestsActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
+
 
 
 

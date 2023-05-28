@@ -41,9 +41,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
        holder.riderName.setText(request.getRider().getUsername());
 
-       holder.riderSrcAddress.setText(request.getSrcAddress());
-       holder.riderDestinationAddress.setText(request.getDestinationAddress());
-       holder.requestPaymentOffer.setText(request.getRiderPaymentOffer().toString());
+       holder.riderSrcAddress.setText("From: "+request.getSrcAddress());
+       holder.riderDestinationAddress.setText("To: "+request.getDestinationAddress());
+       holder.requestPaymentOffer.setText("EGP "+request.getRiderPaymentOffer().toString());
 
 
 
