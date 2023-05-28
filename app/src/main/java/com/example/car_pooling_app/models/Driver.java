@@ -4,6 +4,11 @@ public class Driver extends User{
 
     private Car car;
 
+    public Driver(){
+        super("","","");
+
+    }
+
 
 
     public Driver(String email,String username,String phonenumber,Car car){

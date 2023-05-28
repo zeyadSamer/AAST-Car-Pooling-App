@@ -117,9 +117,6 @@ public class RiderRegistration extends AppCompatActivity {
 
 
 
-
-
-
     private void renderLoginScreen(){
         signButton.setText("Sign In");
         registeringButtonStatus.setText("Don't have an account ? Sign Up");
@@ -129,11 +126,7 @@ public class RiderRegistration extends AppCompatActivity {
         usernameEditText.setVisibility(View.GONE);
 
 
-
-
-
     }
-
 
 
     private void renderRegisterScreen(){
@@ -144,13 +137,12 @@ public class RiderRegistration extends AppCompatActivity {
         usernameEditText.setVisibility(View.VISIBLE);
 
 
-
-
-
     }
 
 
     private void signUp(String email, String password){
+
+
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -159,20 +151,11 @@ public class RiderRegistration extends AppCompatActivity {
                     Toast.makeText(RiderRegistration.this, "Signed Up successfully", Toast.LENGTH_LONG).show();
                     postRiderData();
 
-
-
-
-
-
-
-
-
                 }else{
                     Toast.makeText(RiderRegistration.this, "Error in Signing Up", Toast.LENGTH_LONG).show();
                 }
 
             }
-
 
 
         });
@@ -240,7 +223,7 @@ public class RiderRegistration extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RiderRegistration.this,"Storage NOO",Toast.LENGTH_SHORT).show();
+                Toast.makeText(RiderRegistration.this,"Error in saving data",Toast.LENGTH_SHORT).show();
 //
             }
         });
