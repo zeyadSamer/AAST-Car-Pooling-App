@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -61,9 +62,18 @@ public class RiderRegistration extends AppCompatActivity {
         screenTitle=findViewById(R.id.screenTitle);
         signButton=findViewById(R.id.signButton);
 
-//        if(firebaseAuth.getCurrentUser()!=null){
-//            goToRiderRequestingScreen();
-//        }
+
+        //if user is already signed in before
+        if(firebaseAuth.getCurrentUser()!=null){
+
+          getRiderData(firebaseAuth.getCurrentUser().getEmail());
+
+
+        }
+
+
+
+
 
         registeringButtonStatus.setOnClickListener(new View.OnClickListener() {
 
@@ -151,7 +161,6 @@ public class RiderRegistration extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     Toast.makeText(RiderRegistration.this, "Signed Up successfully", Toast.LENGTH_LONG).show();
                     postRiderData();
-                    goToRiderRequestingScreen();
 
                 }else{
                     Toast.makeText(RiderRegistration.this, "Error in Signing Up", Toast.LENGTH_LONG).show();
@@ -168,11 +177,17 @@ public class RiderRegistration extends AppCompatActivity {
     private void logIn(String email,String password){
 
 
+
+
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Toast.makeText(RiderRegistration.this, "logged in successfully", Toast.LENGTH_LONG).show();
+                    getRiderData(email);
+
+
+
                 }else{
                     Toast.makeText(RiderRegistration.this, "Error in Signing in", Toast.LENGTH_LONG).show();
                 }
@@ -189,50 +204,77 @@ public class RiderRegistration extends AppCompatActivity {
 
 
 
-    private void postRiderData(){
 
-       rider= new Rider(email,username,phone);
-
-
-
-//ANOTHER SOLUTION
-//        firebaseFireStore.collection("riders").document("rider"+firebaseAuth.getCurrentUser().getUid()).set(rider).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//
-//                Toast.makeText(RiderRegistration.this,"Storage Succeess",Toast.LENGTH_SHORT).show();
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(RiderRegistration.this,e.toString(),Toast.LENGTH_SHORT).show();
-//                Log.d("errorsss",e.toString());
-//
-//
-//            }
-//        });
-
-
-
-        firebaseFireStore.collection("riders").add(rider).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+    private void getRiderData(String email){
+        firebaseFireStore.collection("riders").document("rider:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(RiderRegistration.this,"Storage Succeess" ,Toast.LENGTH_SHORT).show();
-//
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                rider=documentSnapshot.toObject(Rider.class);
+//                if(rider!=null)
+                 Log.d("hey",rider.getPhoneNumber().toString());
+                 goToRiderRequestingScreen();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RiderRegistration.this,"Error in saving data",Toast.LENGTH_SHORT).show();
-//
+
             }
         });
+
+
+
+
     }
 
+    private void postRiderData(){
+         rider=new Rider(email,username,phone);
+
+
+
+        firebaseFireStore.collection("riders").document("rider:"+email).set(rider).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+                Toast.makeText(RiderRegistration.this,"User Data Storage Succeeded",Toast.LENGTH_SHORT).show();
+
+                renderLoginScreen();
+                isSigningIn=true;
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(RiderRegistration.this,e.toString(),Toast.LENGTH_SHORT).show();
+                Log.d("errorsss",e.toString());
+
+
+            }
+        });
+
+
+//
+//        firebaseFireStore.collection("riders").add(rider).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//            @Override
+//            public void onSuccess(DocumentReference documentReference) {
+//                Toast.makeText(RiderRegistration.this,"Storage Succeess" ,Toast.LENGTH_SHORT).show();
+////
+//
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(RiderRegistration.this,"Error in saving data",Toast.LENGTH_SHORT).show();
+////
+//            }
+//        });
+//    }
 
 
 
 
-}
+
+}}

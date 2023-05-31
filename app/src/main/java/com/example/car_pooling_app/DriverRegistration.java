@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.car_pooling_app.models.Car;
 import com.example.car_pooling_app.models.Driver;
+import com.example.car_pooling_app.models.Rider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -162,6 +164,12 @@ public class DriverRegistration extends AppCompatActivity {
           public void onComplete(@NonNull Task<AuthResult> task) {
               if(task.isSuccessful()) {
                   Toast.makeText(DriverRegistration.this, "logged in successfully", Toast.LENGTH_LONG).show();
+
+                  getDriverData(email);
+
+
+
+
               }else{
                   Toast.makeText(DriverRegistration.this, "Error in Signing in", Toast.LENGTH_LONG).show();
               }
@@ -169,6 +177,31 @@ public class DriverRegistration extends AppCompatActivity {
           }
       }
       );
+
+    }
+
+
+
+
+
+    private void getDriverData(String email){
+
+        firebaseFirestore.collection("drivers").document("driver:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                driver=documentSnapshot.toObject(Driver.class);
+                goToRequestsScreen();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+
+
 
     }
 
@@ -193,40 +226,64 @@ public class DriverRegistration extends AppCompatActivity {
 
         driver=new Driver(email,username,phone,driverCar);
 
-        firebaseFirestore.collection("drivers").add(driver).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
+        firebaseFirestore.collection("drivers").document("driver:"+email).set(driver).addOnSuccessListener(new OnSuccessListener<Void>() {
+               @Override
+               public void onSuccess(Void unused) {
+                   Toast.makeText(DriverRegistration.this,"Data uploaded successfully",Toast.LENGTH_SHORT).show();
+//
+//                   driver=documentSnapshot.toObject(Driver.class);
+//                   if(driver!=null){
+//                       Log.d("hey",driver.getPhoneNumber().toString());
+//                       isSigningIn=true;
+//                       renderLoginScreen();
+//                   }
 
-                Toast.makeText(DriverRegistration.this,"Data uploaded Successfully",Toast.LENGTH_SHORT).show();
 
-                //after we succeded in uploading data lets upload driver car
-
-                documentReference.update("car",driverCar).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(DriverRegistration.this,"Car uploaded Successfully",Toast.LENGTH_SHORT).show();
-                        goToRequestsScreen();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(DriverRegistration.this,"Car uploading failed",Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+               }
+           }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(DriverRegistration.this,"Error uploading Data",Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverRegistration.this,"Data uploading failed",Toast.LENGTH_SHORT).show();
 
 
             }
         });
 
-    }
 
-    //for testing used later
+//        firebaseFirestore.collection("drivers").add(driver).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//            @Override
+//            public void onSuccess(DocumentReference documentReference) {
+//
+//                Toast.makeText(DriverRegistration.this,"Data uploaded Successfully",Toast.LENGTH_SHORT).show();
+//
+//                //after we succeded in uploading data lets upload driver car
+//
+//                documentReference.update("car",driverCar).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        Toast.makeText(DriverRegistration.this,"Car uploaded Successfully",Toast.LENGTH_SHORT).show();
+//                        goToRequestsScreen();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(DriverRegistration.this,"Car uploading failed",Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(DriverRegistration.this,"Error uploading Data",Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//        });
+//
+//    }
+
+                //for testing used later
 //    private void getData(){
 //        String driverId="8fOL2dN5UZJnAYjWksR0";
 //        firebaseFirestore.collection("drivers").document(driverId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -243,6 +300,8 @@ public class DriverRegistration extends AppCompatActivity {
 //
 //
 //
-//    }
+
+    }
+
 
 }
