@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +21,12 @@ import java.util.ArrayList;
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder>{
 
     final private ArrayList<Request> requests;
+    final private Context context;
 
-    public RequestsAdapter( ArrayList<Request> requests) {
+    public RequestsAdapter( ArrayList<Request> requests,Context context) {
 
         this.requests = requests;
+        this.context=context;
     }
 
     @NonNull
@@ -45,6 +49,16 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
        holder.riderDestinationAddress.setText("To: "+request.getDestinationAddress());
        holder.requestPaymentOffer.setText("EGP "+request.getRiderPaymentOffer().toString());
 
+       holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
+
+           }
+       });
+
+
 
 
 
@@ -65,6 +79,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         TextView riderDestinationAddress;
 
         TextView requestPaymentOffer;
+        Button acceptButton;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -74,6 +89,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             this.riderSrcAddress=itemView.findViewById(R.id.riderLocation);
             this.riderDestinationAddress=itemView.findViewById(R.id.riderDestination);
             this.requestPaymentOffer=itemView.findViewById(R.id.paymentOffer);
+            this.acceptButton=itemView.findViewById(R.id.acceptOfferButton);
 
 
 
