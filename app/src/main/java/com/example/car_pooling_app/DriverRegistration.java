@@ -170,6 +170,7 @@ public class DriverRegistration extends AppCompatActivity {
 
 
 
+
               }else{
                   Toast.makeText(DriverRegistration.this, "Error in Signing in", Toast.LENGTH_LONG).show();
               }
@@ -183,7 +184,6 @@ public class DriverRegistration extends AppCompatActivity {
 
 
 
-
     private void getDriverData(String email){
 
         firebaseFirestore.collection("drivers").document("driver:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -191,7 +191,6 @@ public class DriverRegistration extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 driver=documentSnapshot.toObject(Driver.class);
                 goToRequestsScreen();
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

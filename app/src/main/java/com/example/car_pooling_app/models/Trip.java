@@ -54,6 +54,14 @@ public class Trip {
     public void setAcceptedRequest(Request acceptedRequest) {
         this.acceptedRequest = acceptedRequest;
     }
+
+
+
+
+
+
+
+
 }
 
 
