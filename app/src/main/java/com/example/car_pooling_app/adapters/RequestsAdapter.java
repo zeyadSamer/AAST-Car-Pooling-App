@@ -12,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.car_pooling_app.R;
+import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.Request;
+import com.example.car_pooling_app.models.Trip;
+import com.example.car_pooling_app.models.TripStatus;
 
 import org.w3c.dom.Text;
 
@@ -22,8 +25,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
     final private ArrayList<Request> requests;
     final private Context context;
+    final private Driver driver;
 
-    public RequestsAdapter( ArrayList<Request> requests,Context context) {
+
+    public RequestsAdapter( ArrayList<Request> requests,Context context,Driver driver) {
+
+        this.driver=driver;
 
         this.requests = requests;
         this.context=context;
@@ -54,6 +61,15 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
            public void onClick(View view) {
 
                Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
+
+
+               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,5));
+
+
+               request.getRider().addData(context,trip);
+
+
+             //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 
            }
        });

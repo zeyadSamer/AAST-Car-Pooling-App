@@ -13,7 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.Rider;
+import com.example.car_pooling_app.models.User;
+import com.example.car_pooling_app.models.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -63,13 +66,9 @@ public class RiderRegistration extends AppCompatActivity {
         signButton=findViewById(R.id.signButton);
 
 
-        //if user is already signed in before
-        if(firebaseAuth.getCurrentUser()!=null){
-
-          getRiderData(firebaseAuth.getCurrentUser().getEmail());
 
 
-        }
+
 
 
 
@@ -102,17 +101,29 @@ public class RiderRegistration extends AppCompatActivity {
                  password=passwordEditText.getText().toString();
                  phone=phoneNumberEditText.getText().toString();
 
+                rider=new Rider(email,username,phone);
+
                 if (isSigningIn) {
 
                     Log.d("debugging", "email "+email + password);
 
-                    logIn(email, password);
+
+
+                    rider.login(email, password, RiderRegistration.this, new UserData() {
+                        @Override
+                        public void getUserData() {
+                            getRiderData(email);
+                        }
+                    });
                 }else {
                     signUp(email,password);
 
                 }
             }
+
+
         });
+        rider=null;
 
     }
 
@@ -211,7 +222,6 @@ public class RiderRegistration extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 rider=documentSnapshot.toObject(Rider.class);
-//                if(rider!=null)
                  Log.d("hey",rider.getPhoneNumber().toString());
                  goToRiderRequestingScreen();
 
