@@ -27,6 +27,7 @@ public class CashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cash);
 
         ratingBar=findViewById(R.id.riderRatingbar);
+        collectCashButton=findViewById(R.id.paymentButton);
 
         amountTextView = findViewById(R.id.amountTextView);
         SharedPreferences sPreferences = getSharedPreferences("sPrefEndTrip", Context.MODE_PRIVATE);

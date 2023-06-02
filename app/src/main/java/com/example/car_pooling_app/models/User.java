@@ -72,7 +72,7 @@ public abstract class User {
     public abstract void addData(Context context,Object object);
 
 
-    public abstract void updateData(Object object);
+    public abstract void updateData(Object object,OnUpdate onUpdate);
     public abstract void deleteData(Object object);
 
 

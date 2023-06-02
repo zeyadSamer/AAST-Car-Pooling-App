@@ -58,7 +58,7 @@ public Rider(){
     }
 
     @Override
-    public void updateData(Object object) {
+    public void updateData(Object object,OnUpdate onUpdate) {
 
     if (object instanceof  Trip) {
 
@@ -72,7 +72,7 @@ public Rider(){
             public void onSuccess(Void unused) {
 
                // Toast.makeText((Context) activity,"Driver Arrived to Rider",Toast.LENGTH_SHORT);
-
+             onUpdate.finishTask();
 
             }
         });

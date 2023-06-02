@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 
 import com.example.car_pooling_app.models.Driver;
+import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Trip;
 import com.google.gson.Gson;
 
@@ -36,6 +37,14 @@ public class DriverTripActivity extends AppCompatActivity {
         sourceTextView = findViewById(R.id.srcAddressView);
         phoneTextView = findViewById(R.id.riderPhoneNumberView);
         callIcon = findViewById(R.id.riderCallImageButton);
+
+
+        OnUpdate onUpdate=new OnUpdate() {
+            @Override
+            public void finishTask() {
+
+            }
+        };
 
         SharedPreferences sPreferences = getSharedPreferences("sPref", Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("trip", null);
@@ -67,8 +76,8 @@ public class DriverTripActivity extends AppCompatActivity {
 
 
                     trip.getTripStatus().setReachedRider(true);
-                    trip.getDriver().updateData(trip);
-                    trip.getRider().updateData(trip);
+                    trip.getDriver().updateData(trip,onUpdate);
+                    trip.getRider().updateData(trip,onUpdate);
 
                     arrivedButton.setText("Start Trip");
 
@@ -77,8 +86,8 @@ public class DriverTripActivity extends AppCompatActivity {
                     arrivedButton.setText("End Trip");
                     trip.getTripStatus().setTripStarted(true);
 
-                    trip.getDriver().updateData(trip);
-                    trip.getRider().updateData(trip);
+                    trip.getDriver().updateData(trip, onUpdate);
+                    trip.getRider().updateData(trip, onUpdate);
 
 
 
@@ -90,8 +99,8 @@ public class DriverTripActivity extends AppCompatActivity {
 
 
                     trip.getTripStatus().setCompleted(true);
-                    trip.getDriver().updateData(trip);
-                    trip.getRider().updateData(trip);
+                    trip.getDriver().updateData(trip,onUpdate);
+                    trip.getRider().updateData(trip, onUpdate);
 
 
 

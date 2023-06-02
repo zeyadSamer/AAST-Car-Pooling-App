@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 
+import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Trip;
 import com.google.gson.Gson;
 
@@ -38,11 +39,17 @@ public class RatingActivity extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
                 trip.getTripStatus().setDriverRating(ratingBar.getRating());
-                trip.getRider().updateData(trip);
+                trip.getRider().updateData(trip, new OnUpdate() {
+                    @Override
+                    public void finishTask() {
+                        Intent i=new Intent(RatingActivity.this,RiderRequestingScreen.class);
+                        finish();
+                        startActivity(i);
 
-                Intent i=new Intent(RatingActivity.this,RiderRequestingScreen.class);
-                finish();
-                startActivity(i);
+
+                    }
+                });
+
 
 
             }

@@ -61,7 +61,7 @@ public class Driver extends User{
 
         }}
     @Override
-    public void updateData(Object object) {
+    public void updateData(Object object,OnUpdate onUpdate) {
 
 
         if (object instanceof  Trip) {
@@ -76,7 +76,7 @@ public class Driver extends User{
                 public void onSuccess(Void unused) {
 
                    // Toast.makeText(context,"Driver Arrived to Rider",Toast.LENGTH_SHORT);
-
+                    onUpdate.finishTask();
 
                 }
             });
@@ -96,6 +96,8 @@ public class Driver extends User{
                 @Override
                 public void onSuccess(Void unused) {
                     Log.d("requestDelete","deleted successfully");
+
+
                 }
             });
         }
