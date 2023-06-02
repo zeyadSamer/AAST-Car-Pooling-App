@@ -26,11 +26,14 @@ import java.util.Date;
 
 public class RiderTripActivity extends AppCompatActivity {
 
+
+    TextView statusMessageTextView;
     Button cancelTripButton;
     TextView destinationTextView;
     TextView sourceTextView;
     TextView phoneTextView;
     ImageButton callIcon;
+    Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,12 @@ public class RiderTripActivity extends AppCompatActivity {
         sourceTextView = findViewById(R.id.riderSrcAddressView);
         phoneTextView = findViewById(R.id.driverPhoneNumberView);
         callIcon = findViewById(R.id.driverCallImageButton);
-
+        statusMessageTextView=findViewById(R.id.riderWaitingtextView);
 
         SharedPreferences sPreferences = getSharedPreferences("sPrefTrip", Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("trip", null);
         Gson gson = new Gson();
-        Trip trip = gson.fromJson(nameSharedPref, Trip.class);
+         trip = gson.fromJson(nameSharedPref, Trip.class);
 
         Log.d("TRIP",trip.getRider().getUsername());
 
@@ -68,14 +71,20 @@ public class RiderTripActivity extends AppCompatActivity {
         Rider.firebaseFirestore.collection("riders").document("rider:"+trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                trip=value.toObject(Trip.class);
 
-                if(value.toObject(Trip.class).getTripStatus().isReachedRider()){
+                if(trip.getTripStatus().isReachedRider()){
 
-                    Toast.makeText(RiderTripActivity.this,"Heading to destination",Toast.LENGTH_LONG).show();;
+                    statusMessageTextView.setText(trip.getDriver().getUsername()+" has arrived");
+
                 }
 
             }
         });
+
+
+
+
 
 
 

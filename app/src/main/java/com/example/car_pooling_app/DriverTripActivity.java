@@ -61,14 +61,26 @@ public class DriverTripActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                trip.getTripStatus().setReachedRider(true);
-                trip.getDriver().updateData(trip);
-                trip.getRider().updateData( trip);
-
-                arrivedButton.setText("Finish Trip");
 
 
+                if(arrivedButton.getText().equals("Arrived?")) {
 
+
+                    trip.getTripStatus().setReachedRider(true);
+                    trip.getDriver().updateData(trip);
+                    trip.getRider().updateData(trip);
+
+                    arrivedButton.setText("Start Trip");
+
+                }else if(arrivedButton.getText().equals("Start Trip")){
+                    arrivedButton.setText("End Trip");
+
+                    //Go to cash actiivity
+
+
+
+
+                }
 
 
 
