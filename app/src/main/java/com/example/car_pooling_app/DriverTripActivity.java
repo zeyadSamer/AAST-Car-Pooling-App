@@ -79,7 +79,13 @@ public class DriverTripActivity extends AppCompatActivity {
                     trip.getDriver().updateData(trip);
                     trip.getRider().updateData(trip);
 
-                    //Go to cash actiivity
+
+
+
+
+                }else if (arrivedButton.getText().equals("End Trip")){
+
+
 
 
 
