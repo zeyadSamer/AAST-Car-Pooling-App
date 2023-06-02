@@ -35,6 +35,7 @@ public class RiderTripActivity extends AppCompatActivity {
     ImageButton callIcon;
     Trip trip;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -85,7 +85,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                editor.putString("trip", json);
                editor.apply();
                Intent intent=new Intent(context, secondActivityContext);
+
+               driver.updateData(request);
                context.startActivity(intent);
+
+               //remove request
+
+
 
              //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 

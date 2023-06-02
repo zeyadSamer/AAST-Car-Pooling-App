@@ -87,5 +87,18 @@ public class Driver extends User{
     @Override
     public void deleteData(Object object) {
 
+
+        if(object instanceof Request) {
+
+            Request request=(Request)object;
+
+            firebaseFirestore.collection("requests").document("request:"+request.getRider().getEmail()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("requestDelete","deleted successfully");
+                }
+            });
+        }
+
     }
 }

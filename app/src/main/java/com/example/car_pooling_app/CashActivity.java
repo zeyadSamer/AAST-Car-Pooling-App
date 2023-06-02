@@ -3,8 +3,11 @@ package com.example.car_pooling_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -16,6 +19,8 @@ public class CashActivity extends AppCompatActivity {
     Trip trip;
     TextView amountTextView;
     RatingBar ratingBar;
+    float rating;
+    Button collectCashButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +36,14 @@ public class CashActivity extends AppCompatActivity {
 
         amountTextView.setText("EGP " + trip.getAcceptedRequest().getRiderPaymentOffer().toString());
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-                trip.getTripStatus().setRiderRating((int)v);
-                trip.getRider().updateData(trip);
+
+
+        collectCashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent i=new Intent(CashActivity.this,IncomingRequestsActivity.class);
+            startActivity(i);
             }
         });
 
