@@ -117,15 +117,29 @@ public class RiderTripActivity extends AppCompatActivity {
         cancelTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 //delete trip
 
                 trip.getRider().deleteData(trip, new OnUpdate() {
                     @Override
                     public void finishTask() {
 
-                        Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
-                        startActivity(i);
-                        finish();
+
+                        trip.getDriver().deleteData(trip, new OnUpdate() {
+                            @Override
+                            public void finishTask() {
+
+
+                                Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
+                                startActivity(i);
+                                finish();
+
+
+                            }
+                        });
+
+
                     }
                 });
 

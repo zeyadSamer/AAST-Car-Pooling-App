@@ -88,6 +88,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                Intent intent=new Intent(context, secondActivityContext);
                ((Activity)context).finish();
 
+
+
                driver.deleteData(request, new OnUpdate() {
                    @Override
                    public void finishTask() {
