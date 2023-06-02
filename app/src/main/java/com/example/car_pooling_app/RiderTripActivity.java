@@ -73,45 +73,47 @@ public class RiderTripActivity extends AppCompatActivity {
         });
         Date date = new Date();
 
+
+
         Rider.firebaseFirestore.collection("riders").document("rider:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                trip = value.toObject(Trip.class);
-
-                if(trip.getTripStatus().isCompleted()){
-                    SharedPreferences riderData = getSharedPreferences("sPrefEndTrip",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = riderData.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(trip);
-                    editor.putString("trip", json);
-                    editor.apply();
-                    Intent intent = new Intent(RiderTripActivity.this, RatingActivity.class);
 
 
-                    startActivity(intent);
-                    finish();
+
+                    trip = value.toObject(Trip.class);
+                   if(trip!=null){
+                    if (trip.getTripStatus().isCompleted()) {
+                        SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = riderData.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(trip);
+                        editor.putString("trip", json);
+                        editor.apply();
+                        Intent intent = new Intent(RiderTripActivity.this, RatingActivity.class);
 
 
+                        startActivity(intent);
+                        finish();
+
+
+                    } else if (trip.getTripStatus().isTripStarted()) {
+
+                        statusMessageTextView.setText(trip.getDriver().getUsername() + " is taking you to " + trip.getAcceptedRequest().getDestinationAddress());
+
+                    } else if (trip.getTripStatus().isReachedRider()) {
+
+                        statusMessageTextView.setText(trip.getDriver().getUsername() + " has arrived");
+
+                    }
 
                 }
-
-                else if (trip.getTripStatus().isTripStarted()) {
-
-                    statusMessageTextView.setText(trip.getDriver().getUsername() + " is taking you to "+ trip.getAcceptedRequest().getDestinationAddress());
-
-                }
-
-                else if (trip.getTripStatus().isReachedRider()) {
-
-                    statusMessageTextView.setText(trip.getDriver().getUsername() + " has arrived");
-
-                }
-
 
 
 
             }
         });
+
 
 
         cancelTripButton.setOnClickListener(new View.OnClickListener() {
@@ -121,14 +123,18 @@ public class RiderTripActivity extends AppCompatActivity {
 
                 //delete trip
 
-                trip.getRider().deleteData(trip, new OnUpdate() {
+                trip.getDriver().deleteData(trip, new OnUpdate() {
                     @Override
                     public void finishTask() {
 
+                        Log.d("deletingRiderTrip","trip is deleted successflu");
 
-                        trip.getDriver().deleteData(trip, new OnUpdate() {
+
+                        trip.getRider().deleteData(trip, new OnUpdate() {
+
                             @Override
                             public void finishTask() {
+                                Log.d("deletingDriverrTrip","trip is deleted successflu");
 
 
                                 Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
