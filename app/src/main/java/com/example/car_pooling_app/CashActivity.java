@@ -30,6 +30,8 @@ public class CashActivity extends AppCompatActivity {
         collectCashButton=findViewById(R.id.paymentButton);
 
         amountTextView = findViewById(R.id.amountTextView);
+
+        collectCashButton = findViewById(R.id.paymentButton);
         SharedPreferences sPreferences = getSharedPreferences("sPrefEndTrip", Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("trip", null);
         Gson gson = new Gson();

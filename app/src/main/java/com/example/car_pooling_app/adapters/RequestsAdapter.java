@@ -87,7 +87,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                Intent intent=new Intent(context, secondActivityContext);
 
 
-               driver.updateData(request);
+               driver.deleteData(request);
                context.startActivity(intent);
 
                //remove request
