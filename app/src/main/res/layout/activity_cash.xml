@@ -6,4 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".CashActivity">
 
+
+    <TextView
+        android:id="@+id/paymentPromptTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount To Be Paid"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <Button
+        android:id="@+id/paymentButton"
+        android:layout_width="2000dp"
+        android:layout_height="wrap_content"
+
+        android:text="COLLECT CASH"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountTextView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/amountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro_display_bold"
+        android:text="EGP 90"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -85,10 +85,14 @@ public class DriverTripActivity extends AppCompatActivity {
 
                 }else if (arrivedButton.getText().equals("End Trip")){
 
-
-
-
-
+                    SharedPreferences sPreferences = getSharedPreferences("sPrefEndTrip",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sPreferences.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(trip);
+                    editor.putString("trip", json);
+                    editor.apply();
+                    Intent intent=new Intent(DriverTripActivity.this, CashActivity.class);
+                    startActivity(intent);
 
                 }
 
