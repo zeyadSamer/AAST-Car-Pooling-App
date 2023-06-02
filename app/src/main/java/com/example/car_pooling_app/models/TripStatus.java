@@ -6,14 +6,14 @@ public class TripStatus {
    private boolean reachedRider;
    private boolean tripStarted;
 
-    private int riderRating;
-    private int driverRating;
+    private float riderRating;
+    private float driverRating;
 
     TripStatus(){
 
     }
 
-    public TripStatus(boolean completed, boolean reachedRider,boolean tripStarted,int riderRating,int driverRating) {
+    public TripStatus(boolean completed, boolean reachedRider,boolean tripStarted,float riderRating,float driverRating) {
         this.completed = completed;
         this.riderRating=riderRating;
         this.driverRating=driverRating;
@@ -24,19 +24,19 @@ public class TripStatus {
     }
 
 
-    public int getRiderRating() {
+    public float getRiderRating() {
         return riderRating;
     }
 
-    public void setRiderRating(int riderRating) {
+    public void setRiderRating(float riderRating) {
         this.riderRating = riderRating;
     }
 
-    public int getDriverRating() {
+    public float getDriverRating() {
         return driverRating;
     }
 
-    public void setDriverRating(int driverRating) {
+    public void setDriverRating(float driverRating) {
         this.driverRating = driverRating;
     }
 

@@ -81,7 +81,11 @@ public class RiderTripActivity extends AppCompatActivity {
                     editor.putString("trip", json);
                     editor.apply();
                     Intent intent = new Intent(RiderTripActivity.this, RatingActivity.class);
+
+
                     startActivity(intent);
+                    finish();
+
 
 
                 }
