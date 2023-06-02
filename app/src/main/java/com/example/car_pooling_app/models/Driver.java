@@ -85,7 +85,7 @@ public class Driver extends User{
     }
 
     @Override
-    public void deleteData(Object object) {
+    public void deleteData(Object object, OnUpdate onUpdate) {
 
 
         if(object instanceof Request) {
@@ -102,5 +102,30 @@ public class Driver extends User{
             });
         }
 
+        else if(object instanceof Trip){
+
+
+            Trip trip = (Trip) object;
+            Date date= new Date();
+
+            firebaseFirestore.collection("drivers").document("driver:" + getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+
+                  onUpdate.finishTask();
+
+                }
+            });
+        }
+
+
+
+
+
+
+        }
+
+
+
     }
-}
+

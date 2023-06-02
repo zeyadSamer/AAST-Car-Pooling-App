@@ -18,6 +18,7 @@ import com.example.car_pooling_app.DriverRegistration;
 import com.example.car_pooling_app.IncomingRequestsActivity;
 import com.example.car_pooling_app.R;
 import com.example.car_pooling_app.models.Driver;
+import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Request;
 import com.example.car_pooling_app.models.Trip;
 import com.example.car_pooling_app.models.TripStatus;
@@ -87,7 +88,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                Intent intent=new Intent(context, secondActivityContext);
                ((Activity)context).finish();
 
-               driver.deleteData(request);
+               driver.deleteData(request, new OnUpdate() {
+                   @Override
+                   public void finishTask() {
+
+                   }
+               });
                context.startActivity(intent);
 
                //remove request

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Rider;
 import com.example.car_pooling_app.models.Trip;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,10 +37,13 @@ public class RiderTripActivity extends AppCompatActivity {
     Trip trip;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_trip);
+
+
 
         cancelTripButton = findViewById(R.id.cancelTripButton);
         destinationTextView = findViewById(R.id.riderDestinationAddressView);
@@ -110,7 +114,29 @@ public class RiderTripActivity extends AppCompatActivity {
         });
 
 
+        cancelTripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //delete trip
+
+                trip.getRider().deleteData(trip, new OnUpdate() {
+                    @Override
+                    public void finishTask() {
+
+                        Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+
+                //goto request screen
+            }
+        });
+
+
     }
+
+
 
 
 //    private void listenForTripStart(){

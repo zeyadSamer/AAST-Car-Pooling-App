@@ -73,7 +73,7 @@ public abstract class User {
 
 
     public abstract void updateData(Object object,OnUpdate onUpdate);
-    public abstract void deleteData(Object object);
+    public abstract void deleteData(Object object,OnUpdate onUpdate);
 
 
 
