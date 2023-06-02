@@ -48,7 +48,7 @@ public class IncomingRequestsActivity extends AppCompatActivity {
         Driver driver = gson.fromJson(nameSharedPref, Driver.class);
 
         recyclerView = findViewById(R.id.recycleView);
-        RequestsAdapter requestsAdapter = new RequestsAdapter(requestArrayList,IncomingRequestsActivity.this);
+        RequestsAdapter requestsAdapter = new RequestsAdapter(requestArrayList,IncomingRequestsActivity.this,driver);
         recyclerView.setAdapter(requestsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

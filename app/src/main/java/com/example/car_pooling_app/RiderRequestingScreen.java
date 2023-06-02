@@ -34,7 +34,6 @@ public class RiderRequestingScreen extends AppCompatActivity {
 
 
 
-    private FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
 
 
     @Override
@@ -106,7 +105,7 @@ public class RiderRequestingScreen extends AppCompatActivity {
     private void postRiderRequest() {
 
 
-        firebaseFirestore.collection("requests").document("request:"+rider.getEmail()).set(riderRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Rider.firebaseFirestore.collection("requests").document("request:"+rider.getEmail()).set(riderRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Toast.makeText(RiderRequestingScreen.this,"Requesting ",Toast.LENGTH_SHORT).show();
