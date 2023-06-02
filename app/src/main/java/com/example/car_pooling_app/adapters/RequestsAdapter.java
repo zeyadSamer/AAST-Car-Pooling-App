@@ -69,7 +69,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 
 
-               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,5,false,false));
+               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,false,false,5,5));
 
 
                request.getRider().addData(context,trip);

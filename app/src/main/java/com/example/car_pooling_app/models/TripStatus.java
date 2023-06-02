@@ -6,17 +6,38 @@ public class TripStatus {
    private boolean reachedRider;
    private boolean tripStarted;
 
-    int rating;
+    private int riderRating;
+    private int driverRating;
+
     TripStatus(){
 
     }
 
-    public TripStatus(boolean completed, int rating, boolean reachedRider,boolean tripStarted) {
+    public TripStatus(boolean completed, boolean reachedRider,boolean tripStarted,int riderRating,int driverRating) {
         this.completed = completed;
-        this.rating = rating;
+        this.riderRating=riderRating;
+        this.driverRating=driverRating;
+
         this.reachedRider = reachedRider;
 
         this.tripStarted=tripStarted;
+    }
+
+
+    public int getRiderRating() {
+        return riderRating;
+    }
+
+    public void setRiderRating(int riderRating) {
+        this.riderRating = riderRating;
+    }
+
+    public int getDriverRating() {
+        return driverRating;
+    }
+
+    public void setDriverRating(int driverRating) {
+        this.driverRating = driverRating;
     }
 
     public boolean isTripStarted() {
@@ -33,14 +54,6 @@ public class TripStatus {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
     }
 
     public boolean isReachedRider() { return reachedRider; }
