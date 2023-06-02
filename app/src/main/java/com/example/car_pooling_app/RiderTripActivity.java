@@ -73,7 +73,20 @@ public class RiderTripActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 trip = value.toObject(Trip.class);
 
-                if (trip.getTripStatus().isTripStarted()) {
+                if(trip.getTripStatus().isCompleted()){
+                    SharedPreferences riderData = getSharedPreferences("sPrefEndTrip",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = riderData.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(trip);
+                    editor.putString("trip", json);
+                    editor.apply();
+                    Intent intent = new Intent(RiderTripActivity.this, RatingActivity.class);
+                    startActivity(intent);
+
+
+                }
+
+                else if (trip.getTripStatus().isTripStarted()) {
 
                     statusMessageTextView.setText(trip.getDriver().getUsername() + " is taking you to "+ trip.getAcceptedRequest().getDestinationAddress());
 
@@ -84,6 +97,7 @@ public class RiderTripActivity extends AppCompatActivity {
                     statusMessageTextView.setText(trip.getDriver().getUsername() + " has arrived");
 
                 }
+
 
 
 

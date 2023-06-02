@@ -73,6 +73,7 @@ public class DriverTripActivity extends AppCompatActivity {
                     arrivedButton.setText("Start Trip");
 
                 }else if(arrivedButton.getText().equals("Start Trip")){
+
                     arrivedButton.setText("End Trip");
                     trip.getTripStatus().setTripStarted(true);
 
@@ -84,6 +85,15 @@ public class DriverTripActivity extends AppCompatActivity {
 
 
                 }else if (arrivedButton.getText().equals("End Trip")){
+
+                    Log.d("finalerror","entered");
+
+
+                    trip.getTripStatus().setCompleted(true);
+                    trip.getDriver().updateData(trip);
+                    trip.getRider().updateData(trip);
+
+
 
                     SharedPreferences sPreferences = getSharedPreferences("sPrefEndTrip",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sPreferences.edit();
