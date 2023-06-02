@@ -54,7 +54,6 @@ public Rider(){
             });
     }
 
-
     }
 
     @Override

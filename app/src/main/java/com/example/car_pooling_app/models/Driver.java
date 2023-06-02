@@ -1,6 +1,7 @@
 package com.example.car_pooling_app.models;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+
+import java.util.Date;
 
 public class Driver extends User{
 
@@ -39,25 +42,22 @@ public class Driver extends User{
     public void addData(Context context, Object object) {
 
         if(object instanceof Trip ) {
+            Log.d("here","came here");
 
             Trip trip= (Trip) object;
-            firebaseFirestore.collection("drivers").document("driver:" + getEmail()).collection("trips").add(trip).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            Date date = new Date();
+
+            firebaseFirestore.collection("drivers").document("driver:" + getEmail()).collection("trips").document("trip:" + date.getHours()+"-"+date.getDay()+"-"+date.getMonth()+"-"+date.getYear()).set(trip).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    Toast.makeText(context,"Trip made",Toast.LENGTH_SHORT).show();
-
-
+                public void onSuccess(Void unused) {
+                    Toast.makeText(context, "Heeeeeh",Toast.LENGTH_SHORT);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context,"Trip not made lelasaf",Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(context, "Trip not accepted",Toast.LENGTH_SHORT);
                 }
-
-
             });
-
 
         }}
     @Override

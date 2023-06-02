@@ -69,16 +69,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                request.getRider().addData(context,trip);
 
 
+               driver.addData(context,trip);
+
              //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 
            }
        });
-
-
-
-
-
-
 
     }
 
@@ -106,9 +102,6 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             this.riderDestinationAddress=itemView.findViewById(R.id.riderDestination);
             this.requestPaymentOffer=itemView.findViewById(R.id.paymentOffer);
             this.acceptButton=itemView.findViewById(R.id.acceptOfferButton);
-
-
-
 
         }
     }

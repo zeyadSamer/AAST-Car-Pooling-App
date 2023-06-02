@@ -66,14 +66,6 @@ public class RiderRegistration extends AppCompatActivity {
         signButton=findViewById(R.id.signButton);
 
 
-
-
-
-
-
-
-
-
         registeringButtonStatus.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -92,7 +84,6 @@ public class RiderRegistration extends AppCompatActivity {
         });
 
 
-
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,8 +97,6 @@ public class RiderRegistration extends AppCompatActivity {
                 if (isSigningIn) {
 
                     Log.d("debugging", "email "+email + password);
-
-
 
                     rider.login(email, password, RiderRegistration.this, new UserData() {
                         @Override
@@ -157,8 +146,6 @@ public class RiderRegistration extends AppCompatActivity {
         screenTitle.setText("Sign Up");
         phoneNumberEditText.setVisibility(View.VISIBLE);
         usernameEditText.setVisibility(View.VISIBLE);
-
-
     }
 
 
@@ -178,17 +165,11 @@ public class RiderRegistration extends AppCompatActivity {
                 }
 
             }
-
-
         });
-
     }
 
 
     private void logIn(String email,String password){
-
-
-
 
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -197,24 +178,13 @@ public class RiderRegistration extends AppCompatActivity {
                     Toast.makeText(RiderRegistration.this, "logged in successfully", Toast.LENGTH_LONG).show();
                     getRiderData(email);
 
-
-
                 }else{
                     Toast.makeText(RiderRegistration.this, "Error in Signing in", Toast.LENGTH_LONG).show();
                 }
-
             }
             }
-
         );
-
-
-
-
     }
-
-
-
 
     private void getRiderData(String email){
         firebaseFireStore.collection("riders").document("rider:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -233,9 +203,6 @@ public class RiderRegistration extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private void postRiderData(){
@@ -252,19 +219,14 @@ public class RiderRegistration extends AppCompatActivity {
                 renderLoginScreen();
                 isSigningIn=true;
 
-
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(RiderRegistration.this,e.toString(),Toast.LENGTH_SHORT).show();
                 Log.d("errorsss",e.toString());
-
-
             }
         });
-
 
 //
 //        firebaseFireStore.collection("riders").add(rider).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -282,9 +244,4 @@ public class RiderRegistration extends AppCompatActivity {
 //            }
 //        });
 //    }
-
-
-
-
-
 }}
