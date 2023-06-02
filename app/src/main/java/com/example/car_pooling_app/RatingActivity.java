@@ -41,6 +41,7 @@ public class RatingActivity extends AppCompatActivity {
                 trip.getRider().updateData(trip);
 
                 Intent i=new Intent(RatingActivity.this,RiderRequestingScreen.class);
+                finish();
                 startActivity(i);
 
 

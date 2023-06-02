@@ -85,6 +85,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                editor.putString("trip", json);
                editor.apply();
                Intent intent=new Intent(context, secondActivityContext);
+               ((Activity)context).finish();
+
 
                driver.updateData(request);
                context.startActivity(intent);

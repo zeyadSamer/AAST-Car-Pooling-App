@@ -84,6 +84,7 @@ TextView noRequestsTextView;
                             requestArrayList.add(request);
                             requestsAdapter.notifyDataSetChanged();//DOne by Al hussein
 
+
                         }
 
 
