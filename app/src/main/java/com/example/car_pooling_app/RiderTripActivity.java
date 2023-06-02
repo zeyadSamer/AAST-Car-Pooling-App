@@ -45,14 +45,14 @@ public class RiderTripActivity extends AppCompatActivity {
         sourceTextView = findViewById(R.id.riderSrcAddressView);
         phoneTextView = findViewById(R.id.driverPhoneNumberView);
         callIcon = findViewById(R.id.driverCallImageButton);
-        statusMessageTextView=findViewById(R.id.riderWaitingtextView);
+        statusMessageTextView = findViewById(R.id.riderWaitingtextView);
 
         SharedPreferences sPreferences = getSharedPreferences("sPrefTrip", Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("trip", null);
         Gson gson = new Gson();
-         trip = gson.fromJson(nameSharedPref, Trip.class);
+        trip = gson.fromJson(nameSharedPref, Trip.class);
 
-        Log.d("TRIP",trip.getRider().getUsername());
+        Log.d("TRIP", trip.getRider().getUsername());
 
         destinationTextView.setText(trip.getAcceptedRequest().getDestinationAddress());
         sourceTextView.setText(trip.getAcceptedRequest().getSrcAddress());
@@ -61,32 +61,59 @@ public class RiderTripActivity extends AppCompatActivity {
         callIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i =new Intent(Intent.ACTION_DIAL);
-                i.setData(Uri.parse("tel:"+trip.getDriver().getPhoneNumber()));
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:" + trip.getDriver().getPhoneNumber()));
                 startActivity(i);
             }
         });
-          Date date=new Date();
+        Date date = new Date();
 
-        Rider.firebaseFirestore.collection("riders").document("rider:"+trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        Rider.firebaseFirestore.collection("riders").document("rider:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                trip=value.toObject(Trip.class);
+                trip = value.toObject(Trip.class);
 
-                if(trip.getTripStatus().isReachedRider()){
+                if (trip.getTripStatus().isTripStarted()) {
 
-                    statusMessageTextView.setText(trip.getDriver().getUsername()+" has arrived");
+                    statusMessageTextView.setText(trip.getDriver().getUsername() + " is taking you to "+ trip.getAcceptedRequest().getDestinationAddress());
 
                 }
+
+                else if (trip.getTripStatus().isReachedRider()) {
+
+                    statusMessageTextView.setText(trip.getDriver().getUsername() + " has arrived");
+
+                }
+
+
 
             }
         });
 
 
-
-
-
-
-
     }
+
+
+//    private void listenForTripStart(){
+//        Date date=new Date();
+//        Rider.firebaseFirestore.collection("riders").document("rider:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+//                trip = value.toObject(Trip.class);
+//
+//                if (trip.getTripStatus().isTripStarted()) {
+//
+//                    statusMessageTextView.setText(trip.getDriver().getUsername() + " is taking you to "+ trip.getAcceptedRequest().getDestinationAddress());
+//
+//                }
+//
+//            }
+//        });
+//
+//
+//
+//
+//
+//    }
+
 }

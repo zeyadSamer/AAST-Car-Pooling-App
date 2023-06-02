@@ -74,6 +74,10 @@ public class DriverTripActivity extends AppCompatActivity {
 
                 }else if(arrivedButton.getText().equals("Start Trip")){
                     arrivedButton.setText("End Trip");
+                    trip.getTripStatus().setTripStarted(true);
+
+                    trip.getDriver().updateData(trip);
+                    trip.getRider().updateData(trip);
 
                     //Go to cash actiivity
 
