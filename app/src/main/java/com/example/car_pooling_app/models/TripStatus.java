@@ -2,17 +2,29 @@ package com.example.car_pooling_app.models;
 
 public class TripStatus {
 
-    boolean completed;
-    boolean reachedRider;
+   private boolean completed;
+   private boolean reachedRider;
+   private boolean tripStarted;
+
     int rating;
     TripStatus(){
 
     }
 
-    public TripStatus(boolean completed, int rating, boolean reachedRider) {
+    public TripStatus(boolean completed, int rating, boolean reachedRider,boolean tripStarted) {
         this.completed = completed;
         this.rating = rating;
         this.reachedRider = reachedRider;
+
+        this.tripStarted=tripStarted;
+    }
+
+    public boolean isTripStarted() {
+        return tripStarted;
+    }
+
+    public void setTripStarted(boolean tripStarted) {
+        this.tripStarted = tripStarted;
     }
 
     public boolean isCompleted() {
