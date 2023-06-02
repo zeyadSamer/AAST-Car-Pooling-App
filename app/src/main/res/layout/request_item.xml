@@ -58,6 +58,7 @@
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:text="To:  AAST - Engineering Building A"
                 android:textSize="20dp" />
+
         </LinearLayout>
 
         <TextView

@@ -105,6 +105,10 @@ public class RiderRequestingScreen extends AppCompatActivity {
     private void postRiderRequest() {
 
 
+
+        //check if there is ongoing trip (completed)
+
+
         Rider.firebaseFirestore.collection("requests").document("request:"+rider.getEmail()).set(riderRequest).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
