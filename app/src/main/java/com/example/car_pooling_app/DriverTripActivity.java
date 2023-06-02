@@ -13,22 +13,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Rider;
 import com.example.car_pooling_app.models.Trip;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.Date;
-import java.util.Objects;
 
 public class DriverTripActivity extends AppCompatActivity {
 
@@ -38,12 +34,6 @@ public class DriverTripActivity extends AppCompatActivity {
     TextView phoneTextView;
     ImageButton callIcon;
     Trip trip ;
-
-    Boolean ourTripFound=false;
-    int count=0;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,33 +67,39 @@ public class DriverTripActivity extends AppCompatActivity {
         Date date=new Date();
 
 
-//.document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear())
-//
 
-//        Driver.firebaseFirestore.collection("drivers").document("driver:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//
-//                //when collection changes after starting ride this means trip is canceled and deleted
-//
-//
-//                Toast.makeText()
-//
-//                SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
-//                SharedPreferences.Editor editor = riderData.edit();
-//                Gson gson = new Gson();
-//                String json = gson.toJson(trip);
-//                editor.putString("trip", json);
-//                editor.apply();
-//                Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
-//
-//                startActivity(intent);
-//                finish();
-//
-//            }});
-//
-//
-//
+        Driver.firebaseFirestore.collection("drivers").document("driver:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+
+
+
+                if(trip == null){
+                    //if trip is null then the rider cancelled
+                        SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = riderData.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(trip);
+                        editor.putString("trip", json);
+                        editor.apply();
+                        Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
+
+                        startActivity(intent);
+                        finish();
+
+
+                     }
+
+                else {
+                    trip = value.toObject(Trip.class);
+                }
+
+
+            }
+        });
+
+
 
 
 
