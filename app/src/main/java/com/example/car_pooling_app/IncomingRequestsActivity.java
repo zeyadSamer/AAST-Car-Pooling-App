@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.car_pooling_app.adapters.RequestsAdapter;
@@ -31,11 +32,11 @@ public class IncomingRequestsActivity extends AppCompatActivity {
 
 
 
-    FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+    //FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
 
     ArrayList<Request> requestArrayList=new ArrayList<>();
     RecyclerView recyclerView;
-
+TextView noRequestsTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,15 +47,19 @@ public class IncomingRequestsActivity extends AppCompatActivity {
         String nameSharedPref = sPreferences.getString("MyObject", null);
         Gson gson = new Gson();
         Driver driver = gson.fromJson(nameSharedPref, Driver.class);
+        noRequestsTextView=findViewById(R.id.noRequestView);
 
         recyclerView = findViewById(R.id.recycleView);
-        RequestsAdapter requestsAdapter = new RequestsAdapter(requestArrayList,IncomingRequestsActivity.this,driver);
+        RequestsAdapter requestsAdapter = new RequestsAdapter(requestArrayList,IncomingRequestsActivity.this,driver,DriverTripActivity.class);
         recyclerView.setAdapter(requestsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
      //   getIncomingRequests();
 
-        firebaseFirestore.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+
+
+        Driver.firebaseFirestore.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots,
                                 @Nullable FirebaseFirestoreException e) {
@@ -63,8 +68,16 @@ public class IncomingRequestsActivity extends AppCompatActivity {
                     return;
                 }
                 else{
+                    requestArrayList.clear();
+                    Driver.firebaseFirestore.clearPersistence();
+
+
+
 
                     if(snapshots != null) {
+
+
+
                         for (DocumentChange dc : snapshots.getDocumentChanges()) {
                             Request request = dc.getDocument().toObject(Request.class);
                             Log.d("dataa", request.getDestinationAddress());
@@ -72,6 +85,9 @@ public class IncomingRequestsActivity extends AppCompatActivity {
                             requestsAdapter.notifyDataSetChanged();//DOne by Al hussein
 
                         }
+
+
+                        checkRequests();
                     }
                 }
             };
@@ -82,15 +98,24 @@ public class IncomingRequestsActivity extends AppCompatActivity {
 
     }
 
+    private void checkRequests(){
 
 
+        if(requestArrayList.size()>0){
+            noRequestsTextView.setVisibility(View.GONE);
 
 
-
+        } else{
+            noRequestsTextView.setVisibility(View.VISIBLE);
+        }
+    }
 
     private void getIncomingRequests(){
 
-        firebaseFirestore.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+
+
+        Driver.firebaseFirestore.collection("requests").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots,
                                 @Nullable FirebaseFirestoreException e) {
@@ -117,10 +142,6 @@ public class IncomingRequestsActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
-
-
-
-
 
 
     }

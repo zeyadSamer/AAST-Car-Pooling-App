@@ -1,5 +1,6 @@
 package com.example.car_pooling_app.models;
 
+import android.app.Activity;
 import android.text.format.Time;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,6 +59,24 @@ public Rider(){
 
     @Override
     public void updateData(Object object) {
+
+    if (object instanceof  Trip) {
+
+        Trip trip= (Trip) object;
+
+        Date date = new Date();
+
+
+        firebaseFirestore.collection("riders").document("rider:" + getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).set(trip).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+               // Toast.makeText((Context) activity,"Driver Arrived to Rider",Toast.LENGTH_SHORT);
+
+
+            }
+        });
+    }
 
     }
 

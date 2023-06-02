@@ -1,6 +1,9 @@
 package com.example.car_pooling_app.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +14,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.car_pooling_app.DriverRegistration;
+import com.example.car_pooling_app.IncomingRequestsActivity;
 import com.example.car_pooling_app.R;
 import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.Request;
 import com.example.car_pooling_app.models.Trip;
 import com.example.car_pooling_app.models.TripStatus;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -26,12 +32,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     final private ArrayList<Request> requests;
     final private Context context;
     final private Driver driver;
+    final private Class secondActivityContext;
 
 
-    public RequestsAdapter( ArrayList<Request> requests,Context context,Driver driver) {
-
+    public RequestsAdapter( ArrayList<Request> requests,Context context,Driver driver,Class secondActivityContext) {
+        this.secondActivityContext=secondActivityContext;
         this.driver=driver;
-
         this.requests = requests;
         this.context=context;
     }
@@ -63,13 +69,23 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 
 
-               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,5));
+               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,5,false));
 
 
                request.getRider().addData(context,trip);
 
 
                driver.addData(context,trip);
+
+               SharedPreferences sPreferences = context.getSharedPreferences("sPref",Context.MODE_PRIVATE);
+               SharedPreferences.Editor editor = sPreferences.edit();
+               Gson gson = new Gson();
+               String json = gson.toJson(trip);
+               //editor.putString("Name","Ahmed El-Hussein");
+               editor.putString("trip", json);
+               editor.apply();
+               Intent intent=new Intent(context, secondActivityContext);
+               context.startActivity(intent);
 
              //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.car_pooling_app.models.Car;
 import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.Rider;
+import com.example.car_pooling_app.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,19 +44,21 @@ public class DriverRegistration extends AppCompatActivity {
     Button registeringButtonStatus;
     Button signButton;
     Boolean isSigningIn=false;
-    FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+    //FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     String email;
     String username;
     String password;
     String phone;
     String carType;
     String plateNumber;
-    FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
+    //FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
     Driver driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        User.initializeFireBase();
 
 
 
@@ -140,7 +143,7 @@ public class DriverRegistration extends AppCompatActivity {
     }
 
     private void signUp(String email, String password){
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Driver.firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -159,7 +162,7 @@ public class DriverRegistration extends AppCompatActivity {
 
     private void logIn(String email,String password){
 
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Driver.firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
           @Override
           public void onComplete(@NonNull Task<AuthResult> task) {
               if(task.isSuccessful()) {
@@ -186,7 +189,7 @@ public class DriverRegistration extends AppCompatActivity {
 
     private void getDriverData(String email){
 
-        firebaseFirestore.collection("drivers").document("driver:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        Driver.firebaseFirestore.collection("drivers").document("driver:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 driver=documentSnapshot.toObject(Driver.class);
@@ -225,7 +228,7 @@ public class DriverRegistration extends AppCompatActivity {
 
         driver=new Driver(email,username,phone,driverCar);
 
-        firebaseFirestore.collection("drivers").document("driver:"+email).set(driver).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Driver.firebaseFirestore.collection("drivers").document("driver:"+email).set(driver).addOnSuccessListener(new OnSuccessListener<Void>() {
                @Override
                public void onSuccess(Void unused) {
                    Toast.makeText(DriverRegistration.this,"Data uploaded successfully",Toast.LENGTH_SHORT).show();
