@@ -18,7 +18,6 @@ import com.example.car_pooling_app.DriverRegistration;
 import com.example.car_pooling_app.IncomingRequestsActivity;
 import com.example.car_pooling_app.R;
 import com.example.car_pooling_app.models.Driver;
-import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Request;
 import com.example.car_pooling_app.models.Trip;
 import com.example.car_pooling_app.models.TripStatus;
@@ -86,16 +85,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                editor.putString("trip", json);
                editor.apply();
                Intent intent=new Intent(context, secondActivityContext);
-               ((Activity)context).finish();
 
 
-
-               driver.deleteData(request, new OnUpdate() {
-                   @Override
-                   public void finishTask() {
-
-                   }
-               });
+               driver.updateData(request);
                context.startActivity(intent);
 
                //remove request
