@@ -12,6 +12,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.MemoryCacheSettings;
+import com.google.firebase.firestore.PersistentCacheSettings;
 
 import java.util.function.Function;
 
@@ -19,21 +22,27 @@ import javax.security.auth.callback.Callback;
 
 public abstract class User {
 
-   @Exclude public static FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();;
-   @Exclude public static FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();;
+   @Exclude public static FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+   @Exclude public static FirebaseFirestore firebaseFirestore;
     private String username;
     private String email;
 
     private String phoneNumber;
 
     public User(String username, String email,String phoneNumber) {
-//        firebaseAuth=FirebaseAuth.getInstance();
-//        firebaseFirestore=FirebaseFirestore.getInstance();
 
         this.username = username;
         this.email = email;
 
         this.phoneNumber = phoneNumber;
+
+    }
+
+    public static void initializeFireBase()
+    {
+        FirebaseFirestoreSettings settings=new FirebaseFirestoreSettings.Builder().setPersistenceEnabled(false).build();
+        firebaseFirestore=FirebaseFirestore.getInstance();
+        firebaseFirestore.setFirestoreSettings(settings);
     }
 
 

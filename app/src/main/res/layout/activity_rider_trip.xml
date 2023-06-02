@@ -6,4 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".RiderTripActivity">
 
+    <TextView
+        android:id="@+id/riderWaitingtextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wait for your driver..."
+        android:fontFamily="@font/sf_pro_display_bold"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/common_google_signin_btn_text_dark"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.996" >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/riderDestinationAddressIdentifierView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:text="To: "
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/riderDestinationAddressView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/riderSrcAddressIdentifierView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:text="From: "
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/riderSrcAddressView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="30dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/driverPhoneNumberIdentifierView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:text="Phone: "
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/driverPhoneNumberView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="30dp"
+                    android:fontFamily="@font/sf_pro_display_medium"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+                <ImageButton
+                    android:id="@+id/driverCallImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="50dp"
+                    android:background="@color/common_google_signin_btn_text_dark"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/sym_action_call"
+                    android:contentDescription="Phone Call Icon" />
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/cancelTripButton"
+            android:layout_width="1000dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center|bottom"
+            android:fontFamily="@font/sf_pro_display_bold"
+            android:backgroundTint="@color/black"
+            android:text="Cancel Trip"
+            android:textSize="40dp" />
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

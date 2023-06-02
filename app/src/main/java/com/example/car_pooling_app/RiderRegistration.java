@@ -48,14 +48,16 @@ public class RiderRegistration extends AppCompatActivity {
     String password;
     String phone;
 
-    private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-    private FirebaseFirestore  firebaseFireStore=FirebaseFirestore.getInstance();
+//    private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+//    private FirebaseFirestore  firebaseFireStore=FirebaseFirestore.getInstance();
    Rider rider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_registration);
+
+        User.initializeFireBase();
 
         usernameEditText=(EditText) findViewById(R.id.username);
         emailEditText=(EditText) findViewById(R.id.email);
@@ -152,7 +154,7 @@ public class RiderRegistration extends AppCompatActivity {
     private void signUp(String email, String password){
 
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Rider.firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -171,7 +173,7 @@ public class RiderRegistration extends AppCompatActivity {
 
     private void logIn(String email,String password){
 
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        Rider.firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
@@ -187,7 +189,7 @@ public class RiderRegistration extends AppCompatActivity {
     }
 
     private void getRiderData(String email){
-        firebaseFireStore.collection("riders").document("rider:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        Rider.firebaseFirestore.collection("riders").document("rider:"+email).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -210,7 +212,7 @@ public class RiderRegistration extends AppCompatActivity {
 
 
 
-        firebaseFireStore.collection("riders").document("rider:"+email).set(rider).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Rider.firebaseFirestore.collection("riders").document("rider:"+email).set(rider).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
 
