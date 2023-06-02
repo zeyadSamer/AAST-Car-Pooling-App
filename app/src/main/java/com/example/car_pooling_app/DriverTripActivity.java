@@ -1,5 +1,6 @@
 package com.example.car_pooling_app;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -16,8 +17,14 @@ import android.widget.TextView;
 
 import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.OnUpdate;
+import com.example.car_pooling_app.models.Rider;
 import com.example.car_pooling_app.models.Trip;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.Gson;
+
+import java.util.Date;
 
 public class DriverTripActivity extends AppCompatActivity {
 
@@ -26,7 +33,7 @@ public class DriverTripActivity extends AppCompatActivity {
     TextView sourceTextView;
     TextView phoneTextView;
     ImageButton callIcon;
-
+    Trip trip ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +56,55 @@ public class DriverTripActivity extends AppCompatActivity {
         SharedPreferences sPreferences = getSharedPreferences("sPref", Context.MODE_PRIVATE);
         String nameSharedPref = sPreferences.getString("trip", null);
         Gson gson = new Gson();
-        Trip trip = gson.fromJson(nameSharedPref, Trip.class);
+         trip = gson.fromJson(nameSharedPref, Trip.class);
 
         Log.d("DRIVER",trip.getDriver().getUsername());
 
         destinationTextView.setText(trip.getAcceptedRequest().getDestinationAddress());
         sourceTextView.setText(trip.getAcceptedRequest().getSrcAddress());
         phoneTextView.setText(trip.getRider().getPhoneNumber());
+
+        Date date=new Date();
+
+
+
+        Driver.firebaseFirestore.collection("drivers").document("driver:" + trip.getRider().getEmail()).collection("trips").document("trip:" + date.getHours() + "-" + date.getDay() + "-" + date.getMonth() + "-" + date.getYear()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+
+
+
+                trip = value.toObject(Trip.class);
+                if(trip==null){
+                    //if trip is null then the rider cancelled
+                    if (trip.getTripStatus().isCompleted()) {
+                        SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = riderData.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(trip);
+                        editor.putString("trip", json);
+                        editor.apply();
+                        Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
+
+                        startActivity(intent);
+                        finish();
+
+
+                    } }
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
 
         callIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +114,9 @@ public class DriverTripActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+
 
         arrivedButton.setOnClickListener(new View.OnClickListener() {
             @Override
