@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class DriverTripActivity extends AppCompatActivity {
 
@@ -85,29 +86,32 @@ public class DriverTripActivity extends AppCompatActivity {
                 //when collection changes after starting ride this means trip is canceled and deleted
                 for(DocumentChange dc: value.getDocumentChanges()) {
 
-                    if (dc.getDocument().toObject(Trip.class).getDriver().getEmail() == trip.getDriver().getEmail() &&
-                            dc.getDocument().toObject(Trip.class).getRider().getEmail() == trip.getRider().getEmail() &&
+                    if (Objects.equals(dc.getDocument().toObject(Trip.class).getDriver().getEmail(), trip.getDriver().getEmail()) &&
+                            Objects.equals(dc.getDocument().toObject(Trip.class).getRider().getEmail(), trip.getRider().getEmail()) &&
                             dc.getDocument().toObject(Trip.class).getTripStatus().isCompleted() == trip.getTripStatus().isCompleted()) {
                         ourTripFound = true;
 
-                    } else {
-
-
-                        SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = riderData.edit();
-                        Gson gson = new Gson();
-                        String json = gson.toJson(trip);
-                        editor.putString("trip", json);
-                        editor.apply();
-                        Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
-
-                        startActivity(intent);
-                        finish();
                     }
                 }
 
+                if(!ourTripFound) {
 
-            }
+                    SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = riderData.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(trip);
+                    editor.putString("trip", json);
+                    editor.apply();
+                    Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
+
+                    startActivity(intent);
+                    finish();
+                }
+
+                }
+
+
+
         });
 
 
