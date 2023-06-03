@@ -19,6 +19,7 @@ import com.example.car_pooling_app.models.Driver;
 import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Rider;
 import com.example.car_pooling_app.models.Trip;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -35,6 +36,8 @@ public class DriverTripActivity extends AppCompatActivity {
     TextView phoneTextView;
     ImageButton callIcon;
     Trip trip ;
+
+    Boolean ourTripFound=false;
 
 
 
@@ -72,25 +75,36 @@ public class DriverTripActivity extends AppCompatActivity {
 
 
 
+
+
         Driver.firebaseFirestore.collection("drivers").document("driver:" + trip.getRider().getEmail()).collection("trips").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
 
                 //when collection changes after starting ride this means trip is canceled and deleted
+                for(DocumentChange dc: value.getDocumentChanges()) {
 
-                SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
-                SharedPreferences.Editor editor = riderData.edit();
-                Gson gson = new Gson();
-                String json = gson.toJson(trip);
-                editor.putString("trip", json);
-                editor.apply();
-                Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
+                    if (dc.getDocument().toObject(Trip.class).getDriver().getEmail() == trip.getDriver().getEmail() &&
+                            dc.getDocument().toObject(Trip.class).getRider().getEmail() == trip.getRider().getEmail() &&
+                            dc.getDocument().toObject(Trip.class).getTripStatus().isCompleted() == trip.getTripStatus().isCompleted()) {
+                        ourTripFound = true;
 
-                startActivity(intent);
-                finish();
+                    } else {
 
 
+                        SharedPreferences riderData = getSharedPreferences("sPrefEndTrip", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = riderData.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(trip);
+                        editor.putString("trip", json);
+                        editor.apply();
+                        Intent intent = new Intent(DriverTripActivity.this, IncomingRequestsActivity.class);
+
+                        startActivity(intent);
+                        finish();
+                    }
+                }
 
 
             }
