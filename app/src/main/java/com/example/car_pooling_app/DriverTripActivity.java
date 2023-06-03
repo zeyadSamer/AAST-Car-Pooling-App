@@ -88,7 +88,7 @@ public class DriverTripActivity extends AppCompatActivity {
 
                     if (Objects.equals(dc.getDocument().toObject(Trip.class).getDriver().getEmail(), trip.getDriver().getEmail()) &&
                             Objects.equals(dc.getDocument().toObject(Trip.class).getRider().getEmail(), trip.getRider().getEmail()) &&
-                            dc.getDocument().toObject(Trip.class).getTripStatus().isCompleted() == trip.getTripStatus().isCompleted()) {
+                            dc.getDocument().toObject(Trip.class).getTripStatus().isCompleted() == false) {
                         ourTripFound = true;
 
                     }
