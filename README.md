@@ -5,26 +5,26 @@ It enables users to share rides between their homes and the college campus, redu
 
 ## Features
 
-• "AAST Carpool" is a Java-based Android mobile application designed to facilitate carpooling for college students, enabling them to conveniently commute between their homes and the college campus.
-• Application’s Database is hosted on Google Firebase.
-• The application serves as a platform for students to connect with fellow peers who are willing to share rides, reducing travel costs and promoting a sustainable mode of transportation.
-• Users can create personal profiles within the app, providing necessary details such as their location making it easier to find suitable carpooling partners.
-• The app offers a user-friendly interface that allows students to search for available rides based on their desired pickup and drop-off locations.
-• To ensure safety and reliability, the application incorporates a rating and review system, allowing users to rate and provide feedback on their carpooling experiences with other users.
-• The mobile application promotes a sustainable and eco-friendly mode of transportation, reducing traffic congestion, carbon emissions, and parking space issues within the college campus while fostering a sense of community among students.
+• "AAST Carpool" is a Java-based Android mobile application designed to facilitate carpooling for college students, enabling them to conveniently commute between their homes and the college campus. <br>
+• Application’s Database is hosted on Google Firebase. <br>
+• The application serves as a platform for students to connect with fellow peers who are willing to share rides, reducing travel costs and promoting a sustainable mode of transportation. <br>
+• Users can create personal profiles within the app, providing necessary details such as their location making it easier to find suitable carpooling partners. <br>
+• The app offers a user-friendly interface that allows students to search for available rides based on their desired pickup and drop-off locations. <br>
+• To ensure safety and reliability, the application incorporates a rating and review system, allowing users to rate and provide feedback on their carpooling experiences with other users. <br>
+• The mobile application promotes a sustainable and eco-friendly mode of transportation, reducing traffic congestion, carbon emissions, and parking space issues within the college campus while fostering a sense of community among students. <br>
 
 ## Getting Started
 
 ### Prerequisites
 
-• Android Studio: The project is developed using Android Studio IDE, so make sure you have it installed on your system.
-• Java Development Kit (JDK): Ensure that you have the latest JDK version installed.
+• Android Studio: The project is developed using Android Studio IDE, so make sure you have it installed on your system. <br>
+• Java Development Kit (JDK): Ensure that you have the latest JDK version installed. <br>
 
 ### Installation
 
-1. Clone the repository: git clone https://github.com/your-username/aast-carpool.git
-2. Open the project in Android Studio.
-3. Build and run the project on an emulator or a physical device.
+1. Clone the repository: git clone https://github.com/your-username/aast-carpool.git <br>
+2. Open the project in Android Studio. <br>
+3. Build and run the project on an emulator or a physical device. <br>
 
 ### Contribution
 
