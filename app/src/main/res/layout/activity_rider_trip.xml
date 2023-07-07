@@ -141,15 +141,5 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/cancelTripButton"
-            android:layout_width="1000dp"
-            android:layout_height="88dp"
-            android:layout_gravity="center|bottom"
-            android:fontFamily="@font/sf_pro_display_bold"
-            android:backgroundTint="@color/black"
-            android:text="Cancel Trip"
-            android:textSize="40dp" />
-
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

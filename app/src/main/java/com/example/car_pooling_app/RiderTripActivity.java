@@ -29,7 +29,7 @@ public class RiderTripActivity extends AppCompatActivity {
 
 
     TextView statusMessageTextView;
-    Button cancelTripButton;
+    //Button cancelTripButton;
     TextView destinationTextView;
     TextView sourceTextView;
     TextView phoneTextView;
@@ -45,7 +45,7 @@ public class RiderTripActivity extends AppCompatActivity {
 
 
 
-        cancelTripButton = findViewById(R.id.cancelTripButton);
+        //cancelTripButton = findViewById(R.id.cancelTripButton);
         destinationTextView = findViewById(R.id.riderDestinationAddressView);
         sourceTextView = findViewById(R.id.riderSrcAddressView);
         phoneTextView = findViewById(R.id.driverPhoneNumberView);
@@ -106,52 +106,49 @@ public class RiderTripActivity extends AppCompatActivity {
                         statusMessageTextView.setText(trip.getDriver().getUsername() + " has arrived");
 
                     }
-
                 }
 
-
-
             }
         });
 
 
 
-        cancelTripButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                //delete trip
-
-                trip.getDriver().deleteData(trip, new OnUpdate() {
-                    @Override
-                    public void finishTask() {
-
-                        Log.d("deletingRiderTrip","trip is deleted successflu");
-
-
-                        trip.getRider().deleteData(trip, new OnUpdate() {
-
-                            @Override
-                            public void finishTask() {
-                                Log.d("deletingDriverrTrip","trip is deleted successflu");
-
-
-                                Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
-                                startActivity(i);
-                                finish();
-
-
-                            }
-                        });
-
-
-                    }
-                });
-
-                //goto request screen
-            }
-        });
+//        cancelTripButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                //delete trip
+//
+//                trip.getDriver().deleteData(trip, new OnUpdate() {
+//                    @Override
+//                    public void finishTask() {
+//
+//                        Log.d("deletingRiderTrip","trip is deleted successflu");
+//
+//
+//                        trip.getRider().deleteData(trip, new OnUpdate() {
+//
+//                            @Override
+//                            public void finishTask() {
+//                                Log.d("deletingDriverrTrip","trip is deleted successflu");
+//
+//
+//                                Intent i=new Intent(RiderTripActivity.this,RiderRequestingScreen.class);
+//                                startActivity(i);
+//                                finish();
+//
+//
+//                            }
+//                        });
+//
+//
+//                    }
+//                });
+//
+//                //goto request screen
+//            }
+//        });
 
 
     }
