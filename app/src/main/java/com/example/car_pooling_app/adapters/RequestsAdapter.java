@@ -18,6 +18,7 @@ import com.example.car_pooling_app.DriverRegistration;
 import com.example.car_pooling_app.IncomingRequestsActivity;
 import com.example.car_pooling_app.R;
 import com.example.car_pooling_app.models.Driver;
+import com.example.car_pooling_app.models.OnUpdate;
 import com.example.car_pooling_app.models.Request;
 import com.example.car_pooling_app.models.Trip;
 import com.example.car_pooling_app.models.TripStatus;
@@ -54,50 +55,57 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-       final Request request= this.requests.get(position);
+        final Request request= this.requests.get(position);
 
-       holder.riderName.setText(request.getRider().getUsername());
+        holder.riderName.setText(request.getRider().getUsername());
 
-       holder.riderSrcAddress.setText("From: "+request.getSrcAddress());
-       holder.riderDestinationAddress.setText("To: "+request.getDestinationAddress());
-       holder.requestPaymentOffer.setText("EGP "+request.getRiderPaymentOffer().toString());
+        holder.riderSrcAddress.setText("From: "+request.getSrcAddress());
+        holder.riderDestinationAddress.setText("To: "+request.getDestinationAddress());
+        holder.requestPaymentOffer.setText("EGP "+request.getRiderPaymentOffer().toString());
 
-       holder.acceptButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
+        holder.acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-               Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
-
-
-               Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,false,false,5,5));
+                Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
 
 
-               request.getRider().addData(context,trip);
+                Trip trip =new Trip(driver,request.getRider(),request,new TripStatus(false,false,false,5,5));
 
 
-               driver.addData(context,trip);
-
-               SharedPreferences sPreferences = context.getSharedPreferences("sPref",Context.MODE_PRIVATE);
-               SharedPreferences.Editor editor = sPreferences.edit();
-               Gson gson = new Gson();
-               String json = gson.toJson(trip);
-               //editor.putString("Name","Ahmed El-Hussein");
-               editor.putString("trip", json);
-               editor.apply();
-               Intent intent=new Intent(context, secondActivityContext);
+                request.getRider().addData(context,trip);
 
 
-               driver.deleteData(request);
-               context.startActivity(intent);
+                driver.addData(context,trip);
 
-               //remove request
+                SharedPreferences sPreferences = context.getSharedPreferences("sPref",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sPreferences.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(trip);
+                //editor.putString("Name","Ahmed El-Hussein");
+                editor.putString("trip", json);
+                editor.apply();
+                Intent intent=new Intent(context, secondActivityContext);
+                ((Activity)context).finish();
 
 
 
-             //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
+                driver.deleteData(request, new OnUpdate() {
+                    @Override
+                    public void finishTask() {
 
-           }
-       });
+                    }
+                });
+                context.startActivity(intent);
+
+                //remove request
+
+
+
+                //  Toast.makeText(context,"Request Accepted",Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
