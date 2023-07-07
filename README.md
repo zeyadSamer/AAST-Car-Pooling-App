@@ -17,7 +17,7 @@ It enables users to share rides between their homes and the college campus, redu
 
 ### Prerequisites
 
-• Android Studio: The project is developed using Android Studio IDE, so make sure you have it installed on your system. <br>
+• Android Studio: The project is developed using Android Studio IDE, so make sure you have it installed on your system. <br><br>
 • Java Development Kit (JDK): Ensure that you have the latest JDK version installed. <br>
 
 ### Installation
